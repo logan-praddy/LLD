@@ -1,0 +1,7 @@
+1. Multilevel parking lot ( multiple floors)
+2. Multiple category of parking space
+3.Multiple entry and exit ( adds an interesting case of concurrency) (not supported in code)
+4. Should not allow more vehicles than allocated space for each category
+5.charge should be hourly basis
+6.display available number of parking for each category at entry itself.
+
