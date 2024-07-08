@@ -1,0 +1,83 @@
+Alright, let me show you my implementation for this problem. I will try to keep it short and concise, so that it’s feasible to complete during the tech interview, which is about 45 to 60 minutes. I am sure that there are better solutions out there, but here is my approach.
+
+First let’s identify the problem’s requirements. Usually, the basic requirements for this problem are:
+
+The elevator can go up and down in a real-world fashion.
+Users can send requests to the elevator from both outside and inside the elevator.
+The first requirement is a bit vague, so let me break it down. A real-world elevator has the following behaviours:
+
+When elevator is going up or down, it will stop at all the floors that the users requested.
+If the elevator received a request of going down while it is going up, the elevator will go to the highest floor in the current requests, and then go down.
+Users can send requests at anytime.
+After understanding the requirement, we can start with our design. From the analysis above, we know that elevator needs to sort the requests by some kind of order. It’s not by timestamp, because if elevator is at floor 1, and customer A wants to go to floor 4, and B wants to go to floor 2, the elevator should not go to floor 4 first just because A sent the request first. Instead, the elevator should stop at floor 2 and let B out, then go to floor 4 to let A out. Thus, we know that the request should be sorted by the distance from the current floor and not by timestamp.
+
+
+
+Implementation
+Let’s design the request class.
+
+public class Request {
+
+    int currentFloor;
+    int desiredFloor;
+    Direction direction;
+    Location location;
+
+    public Request(int currentFloor, int desiredFloor, Direction direction, Location location) {
+        this.currentFloor = currentFloor;
+        this.desiredFloor = desiredFloor;
+        this.direction = direction;
+        this.location = location;
+    }
+}
+public enum Direction {
+    UP,
+    DOWN,
+    IDLE
+}
+public enum Location {
+    INSIDE_ELEVATOR,
+    OUTSIDE_ELEVATOR
+}
+Assumptions
+Now, in real life, the elevator will finish all up requests before starting down requests. Let’s assume that going up has more priority than going down, which means that when the elevator is in IDLE state, and has both up and down requests, it will execute up requests first.
+
+I used a max heap to store all down requests and sort them by their desired floor. Similarly, a min heap to store all up requests and sort them by their desired floor.
+
+When, the requester is outside of the elevator, the elevator needs to stop at the currentFloor of the requester, before going to the desiredFloor of the requester.
+
+Here is the elevator class implementation after keeping all the above in mind.
+
+
+
+
+Validation
+As shown above, I have giving one example run of my code. In the example, there are two people inside of the elevator that want to go to floor 5 and 3. A person outside the elevator at floor 4 wants to go to floor 0. And two people inside of the elevator want to go to floor 1 and 2.
+
+We expect the elevator up first and stop at floor 3 and 5. Then, the elevator to go down and stop at floor 4 to pick up the person outside the elevator. Then, the elevator should keep going down and stop at floor 2, 1, and 0 respectively.
+
+Let’s see the output message to verify if the elevator’s behaviour aligns with our expectation.
+
+Append up request going to floor 5.
+Append up request going to floor 3.
+Append down request going to floor 4.
+Append down request going to floor 0.
+Append down request going to floor 1.
+Append down request going to floor 2.
+
+Processing up requests. Elevator stopped at floor 3.
+Processing up requests. Elevator stopped at floor 5.
+Processing down requests. Elevator stopped at floor 4.
+Processing down requests. Elevator stopped at floor 2.
+Processing down requests. Elevator stopped at floor 1.
+Processing down requests. Elevator stopped at floor 0.
+Finished all requests.
+
+Process finished with exit code 0
+As the above log shows, it is exactly what we expected.
+
+
+
+Time and Space Complexity
+The main structure that we use in this design is heap. It has a time complexity of O(nlogn). The space complexity is O(n).
+
