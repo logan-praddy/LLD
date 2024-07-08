@@ -147,11 +147,11 @@ class SnakeAndLadderService {
      * ==================Initialize board==================
      */
 
-    public void setPlayers(List<Player> players) {
+    public void setPlayers(List<Player> playersList) {
         this.players = new LinkedList<Player>();
-        this.initialNumberOfPlayers = players.size();
+        this.initialNumberOfPlayers = playersList.size();
         Map<String, Integer> playerPieces = new HashMap<String, Integer>();
-        for (Player player : players) {
+        for (Player player : playersList) {
             this.players.add(player);
             playerPieces.put(player.getId(), 0); //Each player has a piece which is initially kept outside the board (i.e., at position 0).
         }
@@ -288,32 +288,62 @@ class SnakeAndLadderService {
      */
 }
 public class Driver {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+//    public static void main(String[] args) {
+//        Scanner scanner = new Scanner(System.in);
+//
+//        int noOfSnakes = scanner.nextInt();
+//        List<Snake> snakes = new ArrayList<Snake>();
+//        for (int i = 0; i < noOfSnakes; i++) {
+//            snakes.add(new Snake(scanner.nextInt(), scanner.nextInt()));
+//        }
+//
+//        int noOfLadders = scanner.nextInt();
+//        List<Ladder> ladders = new ArrayList<Ladder>();
+//        for (int i = 0; i < noOfLadders; i++) {
+//            ladders.add(new Ladder(scanner.nextInt(), scanner.nextInt()));
+//        }
+//
+//        int noOfPlayers = scanner.nextInt();
+//        List<Player> players = new ArrayList<Player>();
+//        for (int i = 0; i < noOfPlayers; i++) {
+//            players.add(new Player(scanner.next()));
+//        }
+//
+//        SnakeAndLadderService snakeAndLadderService = new SnakeAndLadderService();
+//        snakeAndLadderService.setPlayers(players);
+//        snakeAndLadderService.setSnakes(snakes);
+//        snakeAndLadderService.setLadders(ladders);
+//
+//        snakeAndLadderService.startGame();
+//    }
 
-        int noOfSnakes = scanner.nextInt();
-        List<Snake> snakes = new ArrayList<Snake>();
-        for (int i = 0; i < noOfSnakes; i++) {
-            snakes.add(new Snake(scanner.nextInt(), scanner.nextInt()));
+
+    //hardcoded
+
+
+        public static void main(String[] args) {
+            int noOfSnakes = 2;
+            List<Snake> snakes = new ArrayList<Snake>();
+            snakes.add(new Snake(14, 7));
+            snakes.add(new Snake(31, 26));
+
+            int noOfLadders = 2;
+            List<Ladder> ladders = new ArrayList<Ladder>();
+            ladders.add(new Ladder(3, 22));
+            ladders.add(new Ladder(20, 29));
+
+            int noOfPlayers = 2;
+            List<Player> players = new ArrayList<Player>();
+            players.add(new Player("Alice"));
+            players.add(new Player("Bob"));
+
+            SnakeAndLadderService snakeAndLadderService = new SnakeAndLadderService();
+            snakeAndLadderService.setPlayers(players);
+            snakeAndLadderService.setSnakes(snakes);
+            snakeAndLadderService.setLadders(ladders);
+
+            snakeAndLadderService.startGame();
         }
 
-        int noOfLadders = scanner.nextInt();
-        List<Ladder> ladders = new ArrayList<Ladder>();
-        for (int i = 0; i < noOfLadders; i++) {
-            ladders.add(new Ladder(scanner.nextInt(), scanner.nextInt()));
-        }
 
-        int noOfPlayers = scanner.nextInt();
-        List<Player> players = new ArrayList<Player>();
-        for (int i = 0; i < noOfPlayers; i++) {
-            players.add(new Player(scanner.next()));
-        }
-
-        SnakeAndLadderService snakeAndLadderService = new SnakeAndLadderService();
-        snakeAndLadderService.setPlayers(players);
-        snakeAndLadderService.setSnakes(snakes);
-        snakeAndLadderService.setLadders(ladders);
-
-        snakeAndLadderService.startGame();
-    }
 }
